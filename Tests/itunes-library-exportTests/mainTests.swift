@@ -34,6 +34,48 @@ final class MainTests: XCTestCase {
         XCTAssertEqual(0, exitstatus)
     }
 
+    func testShortFormat() throws {
+        let (exitstatus, _) = try itunes_library_export(["-f", "json"])
+        XCTAssertEqual(0, exitstatus)
+    }
+
+    func testBadFormat() throws {
+        let expected = """
+        Error: The value 'bad' is invalid for '--format <format>'
+        Help:  --format <format>  The output format.
+        Usage: itunes-library-export [--format <format>]
+          See 'itunes-library-export --help' for more information.
+
+        """
+        let (exitstatus, actual) = try itunes_library_export(["--format", "bad"])
+        XCTAssertNotEqual(0, exitstatus)
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testUnknownFlag() throws {
+        let expected = """
+        Error: Unknown option '-v'
+        Usage: itunes-library-export [--format <format>]
+          See 'itunes-library-export --help' for more information.
+
+        """
+        let (exitstatus, actual) = try itunes_library_export(["-v"])
+        XCTAssertNotEqual(0, exitstatus)
+        XCTAssertEqual(actual, expected)
+    }
+
+    func testUnknownOption() throws {
+        let expected = """
+        Error: Unknown option '--answer'
+        Usage: itunes-library-export [--format <format>]
+          See 'itunes-library-export --help' for more information.
+
+        """
+        let (exitstatus, actual) = try itunes_library_export(["--answer", "42"])
+        XCTAssertNotEqual(0, exitstatus)
+        XCTAssertEqual(actual, expected)
+    }
+
     func itunes_library_export(_ arguments: [String] = []) throws -> (Int32, String) {
         let fooBinary = productsDirectory.appendingPathComponent("itunes-library-export")
 
@@ -43,6 +85,7 @@ final class MainTests: XCTestCase {
 
         let pipe = Pipe()
         process.standardOutput = pipe
+        process.standardError = pipe
 
         try process.run()
 
