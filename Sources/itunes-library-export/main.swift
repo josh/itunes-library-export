@@ -11,6 +11,7 @@ enum Format: String {
 }
 
 var format: Format = .xml
+var outputURL = URL(fileURLWithPath: "/dev/stdout")
 
 for (index, argument) in CommandLine.arguments.enumerated() {
     guard argument.hasPrefix("-") else { continue }
@@ -22,6 +23,7 @@ for (index, argument) in CommandLine.arguments.enumerated() {
 
         OPTIONS:
           -f, --format <format>   The output format. (default: xml)
+          -o, --output <path>     The output path. (default: stdout)
           -h, --help              Show help information.
 
         """
@@ -42,7 +44,8 @@ for (index, argument) in CommandLine.arguments.enumerated() {
             fputs(message, stderr)
             exit(1)
         }
-
+    case "-o", "--output":
+        outputURL = URL(fileURLWithPath: CommandLine.arguments[index + 1])
     default:
         let message = """
         Error: Unknown option '\(argument)'
@@ -75,4 +78,8 @@ case .json:
     data = try encoder.encode(library)
 }
 
-FileHandle.standardOutput.write(data)
+if outputURL.path == "/dev/stdout" {
+    FileHandle.standardOutput.write(data)
+} else {
+    try data.write(to: outputURL)
+}

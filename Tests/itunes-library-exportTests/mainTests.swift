@@ -9,6 +9,7 @@ final class MainTests: XCTestCase {
 
         OPTIONS:
           -f, --format <format>   The output format. (default: xml)
+          -o, --output <path>     The output path. (default: stdout)
           -h, --help              Show help information.
 
 
