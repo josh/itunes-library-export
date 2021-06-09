@@ -56,23 +56,23 @@ for (index, argument) in CommandLine.arguments.enumerated() {
 }
 
 let library = try ITLibrary(apiVersion: "1.1")
+var data: Data
 
 switch format {
 case .plist:
     let encoder = PropertyListEncoder()
     encoder.outputFormat = .binary
     usePlistCodingKeys = true
-    let data = try encoder.encode(library)
-    FileHandle.standardOutput.write(data)
+    data = try encoder.encode(library)
 case .xml:
     let encoder = PropertyListEncoder()
     encoder.outputFormat = .xml
     usePlistCodingKeys = true
-    let data = try encoder.encode(library)
-    FileHandle.standardOutput.write(data)
+    data = try encoder.encode(library)
 case .json:
     let encoder = JSONEncoder()
     encoder.dateEncodingStrategy = .iso8601
-    let data = try encoder.encode(library)
-    FileHandle.standardOutput.write(data)
+    data = try encoder.encode(library)
 }
+
+FileHandle.standardOutput.write(data)
