@@ -1,0 +1,26 @@
+name: Swift
+
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-10.14, macos-10.15, macos-11]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Print version
+        run: swift --version
+
+      - name: Build
+        run: swift build --verbose
+
+      - name: Run executable
+        run: swift run itunes-library-export --help
+
+      - name: Run tests
+        run: swift test --verbose
