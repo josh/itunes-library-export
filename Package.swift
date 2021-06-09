@@ -1,4 +1,4 @@
-// swift-tools-version:5.4
+// swift-tools-version:5.3
 
 import PackageDescription
 
@@ -11,7 +11,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.4.0"),
     ],
     targets: [
-        .executableTarget(
+        .target(
             name: "itunes-library-export",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
