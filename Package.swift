@@ -7,15 +7,9 @@ let package = Package(
     platforms: [
         .macOS(.v10_13),
     ],
-    dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "0.4.0"),
-    ],
     targets: [
         .target(
             name: "itunes-library-export",
-            dependencies: [
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
-            ],
             linkerSettings: [
                 .linkedFramework("iTunesLibrary"),
             ]
