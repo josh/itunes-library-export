@@ -8,7 +8,7 @@ let package = Package(
     .macOS(.v13)
   ],
   targets: [
-    .target(
+    .executableTarget(
       name: "itunes-library-export",
       linkerSettings: [
         .linkedFramework("iTunesLibrary")
