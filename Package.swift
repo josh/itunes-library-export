@@ -1,11 +1,11 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.7
 
 import PackageDescription
 
 let package = Package(
   name: "iTunesLibraryExport",
   platforms: [
-    .macOS(.v10_13)
+    .macOS(.v13)
   ],
   targets: [
     .target(
