@@ -13,6 +13,7 @@ jobs:
           - macos-26
 
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v2
