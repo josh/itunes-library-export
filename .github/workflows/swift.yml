@@ -27,5 +27,5 @@ jobs:
         run: swift run itunes-library-export --help
 
       - name: Run tests
-        if: matrix.os == 'macos-13' && matrix.os == 'macos-14'
+        if: matrix.os == 'macos-14'
         run: swift test --verbose
