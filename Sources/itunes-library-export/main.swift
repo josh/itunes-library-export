@@ -58,7 +58,20 @@ for (index, argument) in CommandLine.arguments.enumerated() {
   }
 }
 
-let library = try ITLibrary(apiVersion: "1.1")
+let library: ITLibrary
+do {
+  library = try ITLibrary(apiVersion: "1.1")
+} catch let error as NSError where error.domain == NSCocoaErrorDomain && error.code == 4097 {
+  fputs("""
+    Error: Media library access denied.
+
+    Grant permission in: System Settings > Privacy & Security > Media & Apple Music
+    Enable access for your terminal app (Terminal, iTerm2, etc.)
+
+    """, stderr)
+  exit(1)
+}
+
 var data: Data
 
 switch format {
