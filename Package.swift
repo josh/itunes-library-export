@@ -11,7 +11,13 @@ let package = Package(
     .executableTarget(
       name: "itunes-library-export",
       linkerSettings: [
-        .linkedFramework("iTunesLibrary")
+        .linkedFramework("iTunesLibrary"),
+        .unsafeFlags([
+          "-Xlinker", "-sectcreate",
+          "-Xlinker", "__TEXT",
+          "-Xlinker", "__info_plist",
+          "-Xlinker", "Resources/Info.plist",
+        ]),
       ]
     ),
     .testTarget(
